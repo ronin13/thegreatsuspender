@@ -11,7 +11,8 @@
     "https://*/*",
     "chrome://favicon/*",
     "http://greatsuspender.github.io/",
-    "contextMenus"
+    "contextMenus",
+    "system.memory"
   ],
   "background": {
     "scripts": ["js/db.js", "js/gsUtils.js", "js/background.js"],

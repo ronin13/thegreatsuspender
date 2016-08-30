@@ -11,6 +11,7 @@
         UNSUSPEND_ON_FOCUS: 'gsUnsuspendOnFocus',
         SUSPEND_TIME: 'gsTimeToSuspend',
         IGNORE_PINNED: 'gsDontSuspendPinned',
+        MEM_THRES:  'memThresholdPercent',
         IGNORE_FORMS: 'gsDontSuspendForms',
         IGNORE_AUDIO: 'gsDontSuspendAudio',
         IGNORE_CACHE: 'gsIgnoreCache',
@@ -42,6 +43,7 @@
             defaults[this.BATTERY_CHECK] = false;
             defaults[this.UNSUSPEND_ON_FOCUS] = false;
             defaults[this.IGNORE_PINNED] = true;
+            defaults[this.MEM_THRES] = 75;
             defaults[this.IGNORE_FORMS] = true;
             defaults[this.IGNORE_AUDIO] = true;
             defaults[this.IGNORE_CACHE] = false;

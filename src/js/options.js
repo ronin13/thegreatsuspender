@@ -19,6 +19,7 @@
             'unsuspendOnFocus': gsUtils.UNSUSPEND_ON_FOCUS,
             'dontSuspendPinned': gsUtils.IGNORE_PINNED,
             'dontSuspendForms': gsUtils.IGNORE_FORMS,
+            'memThresholdPercent': gsUtils.MEM_THRES,
             'dontSuspendAudio': gsUtils.IGNORE_AUDIO,
             'ignoreCache': gsUtils.IGNORE_CACHE,
             'addContextMenu': gsUtils.ADD_CONTEXT,
@@ -73,6 +74,7 @@
         setScreenCaptureNoteVisibility(gsUtils.getOption(gsUtils.SCREEN_CAPTURE) !== '0');
         setAudibleNoteVisibility(gsUtils.getChromeVersion() < 45 && gsUtils.getOption(gsUtils.IGNORE_AUDIO));
         setAutoSuspendOptionsVisibility(gsUtils.getOption(gsUtils.SUSPEND_TIME) > 0);
+        setMemThresPercentVisibility(gsUtils.getOption(gsUtils.MEM_THRES) > 0);
     }
 
     function populateOption(element, value) {
@@ -84,6 +86,8 @@
 
         } else if (element.tagName === 'TEXTAREA') {
             element.value = value;
+        } else if (element.tagName === 'INPUT' && element.hasAttribute('type') && element.getAttribute('type') === 'number') {
+            element.valueAsNumber = value;
         }
     }
 
@@ -98,6 +102,9 @@
         if (element.tagName === 'TEXTAREA') {
             return element.value;
         }
+        if (element.tagName === 'INPUT' && element.hasAttribute('type') && element.getAttribute('type') === 'number') {
+            return element.valueAsNumber;
+        }
     }
 
     function setAudibleNoteVisibility(visible) {
@@ -105,6 +112,14 @@
             document.getElementById('audibleOptionNote').style.display = 'block';
         } else {
             document.getElementById('audibleOptionNote').style.display = 'none';
+        }
+    }
+
+    function setMemThresPercentVisibility(visible) {
+        if (visible) {
+            document.getElementById('memThresholdPercent').style.display = 'block';
+        } else {
+            document.getElementById('memThresholdPercent').style.display = 'none';
         }
     }
 
@@ -143,6 +158,9 @@
             } else if (pref === gsUtils.SUSPEND_TIME) {
                 interval = getOptionValue(element);
                 setAutoSuspendOptionsVisibility(interval > 0);
+            } else if (pref === gsUtils.MEM_THRES) {
+                interval = getOptionValue(element);
+                setMemThresPercentVisibility(interval > 0);
             }
         };
     }

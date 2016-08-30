@@ -940,7 +940,18 @@ var tgs = (function () {
             break;
 
         case 'suspendTab':
-            requestTabSuspension(sender.tab);
+            chrome.system.memory.getInfo(
+                    function (info) {
+                            var mem_threshold = gsUtils.getOption(gsUtils.MEM_THRES);
+                            var percent = 100 - ((info.availableCapacity/info.capacity)*100);
+
+                            if (percent < mem_threshold) {
+                                console.log("Not suspending for now");
+                                return;
+                            }
+                            requestTabSuspension(sender.tab, true);
+                    }
+            );
             break;
 
         case 'requestUnsuspendTab':
